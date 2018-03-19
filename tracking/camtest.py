@@ -6,13 +6,22 @@ import time
 # The contour of a tracker marker should be at least this long
 min_contour_length = 48
 
-# The width of the frame
+# The width of the webcam frame
 width = 640
+# The height of the webcam frame
+height = 480
 
 # Start video camera on webcam
 video_capture = cv2.VideoCapture(2)
 
+# ball = {"x": 200, "y": 150, "acc": 1, "direc": 100}
+
 displayColors = [[(0, 0, 255), (50, 50, 200)], [(0, 255, 0), (50, 200, 50)]]
+
+# def resetBall():
+# 	global ball
+#
+# 	ball["x"] = 200
 
 try:
 	while True:
@@ -81,7 +90,25 @@ try:
 		# Show the image in a window
 		cv2.imshow("Veld cam", frame)
 
-		# blank_image = np.zeros((height,width,3), np.uint8)
+		fpong = numpy.zeros((300, 400, 3), numpy.uint8)
+		fcord = {"left": -60, "right": -60}
+
+		if len(cont_wins[0]) > 0:
+			fcord["left"] = int(cont_wins[0][1]["y"] / height * 300)
+
+		if len(cont_wins[1]) > 0:
+			fcord["right"] = int(cont_wins[1][1]["y"] / height * 300)
+
+
+		cv2.rectangle(fpong, (5, fcord["left"] + 20), (15, fcord["left"] - 20), (255, 255, 255), cv2.FILLED)
+		cv2.rectangle(fpong, (395, fcord["right"] + 20), (385, fcord["right"] - 20), (255, 255, 255), cv2.FILLED)
+
+		dash_height = -4
+		while dash_height <= 300:
+			cv2.rectangle(fpong, (195, dash_height), (205, dash_height + 10), (255, 255, 255), cv2.FILLED)
+			dash_height += 20
+
+		cv2.imshow("Game", fpong)
 
 		# Interupt if we catch a key press
 		if cv2.waitKey(1) != -1:
