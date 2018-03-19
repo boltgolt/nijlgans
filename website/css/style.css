@@ -2,8 +2,9 @@
     color: #444;
 }
 
-.brand-logo {
-    color: #444;
+.img-logo {
+    max-height: 64px;
+    max-width: 64px;
 }
 
 p {
@@ -37,6 +38,10 @@ p {
 @media only screen and (max-width : 600px) {
   #index-banner .section {
     top: 0;
+  }
+  .img-logo {
+    max-height: 56px;
+    max-width: 56px;
   }
 }
 
