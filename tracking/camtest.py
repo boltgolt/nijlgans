@@ -2,6 +2,7 @@
 import cv2
 import numpy
 import time
+import random
 
 # The contour of a tracker marker should be at least this long
 min_contour_length = 48
@@ -13,15 +14,35 @@ height = 480
 
 # Start video camera on webcam
 video_capture = cv2.VideoCapture(2)
-
-# ball = {"x": 200, "y": 150, "acc": 1, "direc": 100}
-
+# The ball data container
+ball = {"x": 200.0, "y": 150.0, "d": {"x": 0.0, "y": 0.0}}
+# The default colors in the debug window
 displayColors = [[(0, 0, 255), (50, 50, 200)], [(0, 255, 0), (50, 200, 50)]]
 
-# def resetBall():
-# 	global ball
-#
-# 	ball["x"] = 200
+def resetBall():
+	"""Reset the position and randomize the direction"""
+	global ball
+
+	# Set the position to the middle
+	ball["x"] = 200.0
+	ball["y"] = 150.0
+
+	# Randomize the horizontal speed
+	if random.randint(0, 1):
+		ball["d"]["x"] = random.uniform(-3, -2)
+	else:
+		ball["d"]["x"] = random.uniform(3, 2)
+
+	# Randomize the certical speed
+	if random.randint(0, 1):
+		ball["d"]["y"] = random.uniform(-1, -2)
+	else:
+		ball["d"]["y"] = random.uniform(-1, -2)
+
+# Set the starting position
+resetBall()
+
+print(ball)
 
 try:
 	while True:
@@ -90,24 +111,62 @@ try:
 		# Show the image in a window
 		cv2.imshow("Veld cam", frame)
 
+		# Create an empty black image
 		fpong = numpy.zeros((300, 400, 3), numpy.uint8)
+		# Set the cords to off screen by default
 		fcord = {"left": -60, "right": -60}
 
+		# Set the relative opsition of the points if they exist
 		if len(cont_wins[0]) > 0:
 			fcord["left"] = int(cont_wins[0][1]["y"] / height * 300)
-
 		if len(cont_wins[1]) > 0:
 			fcord["right"] = int(cont_wins[1][1]["y"] / height * 300)
 
-
+		# Draw the left bat
 		cv2.rectangle(fpong, (5, fcord["left"] + 20), (15, fcord["left"] - 20), (255, 255, 255), cv2.FILLED)
+		# Draw the right bat
 		cv2.rectangle(fpong, (395, fcord["right"] + 20), (385, fcord["right"] - 20), (255, 255, 255), cv2.FILLED)
 
-		dash_height = -4
+		# Start the dashes off screen
+		dash_height = -6
+
+		# Draw the dashes
 		while dash_height <= 300:
 			cv2.rectangle(fpong, (195, dash_height), (205, dash_height + 10), (255, 255, 255), cv2.FILLED)
 			dash_height += 20
 
+		# Bounce ball on the top and bottom of the image
+		if ball["y"] < 8:
+			ball["y"] = 8
+			ball["d"]["y"] *= -1
+		if ball["y"] > 292:
+			ball["y"] = 292
+			ball["d"]["y"] *= -1
+
+		# Detect collision on the right bat
+		if ball["x"] > 377 and ball["x"] < 380:
+			if ball["y"] > fcord["right"] - 20 and ball["y"] < fcord["right"] + 20:
+				ball["x"] = 377
+				ball["d"]["x"] *= -1
+
+		# Detect collision on the left bat
+		if ball["x"] > 20 and ball["x"] < 23:
+			if ball["y"] > fcord["left"] - 20 and ball["y"] < fcord["left"] + 20:
+				ball["x"] = 23
+				ball["d"]["x"] *= -1
+
+		# Move the ball in the direction it's going
+		ball["x"] += ball["d"]["x"]
+		ball["y"] += ball["d"]["y"]
+
+		# If it's outside the image, reset the ball
+		if ball["x"] < -50 or ball["x"] > 450:
+			resetBall()
+
+		# Draw the new ball position
+		cv2.rectangle(fpong, (int(ball["x"] + 8), int(ball["y"] + 8)), (int(ball["x"] - 8), int(ball["y"] - 8)), (255, 255, 255), cv2.FILLED)
+
+		# Show the game screen
 		cv2.imshow("Game", fpong)
 
 		# Interupt if we catch a key press
