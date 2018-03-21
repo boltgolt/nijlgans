@@ -4,12 +4,11 @@
 
 .img-logo {
   max-height: 64px;
-  opacity: 0.5;
-  filter: alpha(opacity=50); /* For IE8 and earlier */
 }
 
-.header-section-background {
-  background-color:rgba(0, 0, 0, 0.548);
+.background-image-filter {
+  -webkit-filter: blur(3px); /* Safari 6.0 - 9.0 */
+  filter: blur(3px);
 }
 
 p {
