@@ -22,6 +22,16 @@ span.link-text-visible {
   color: #26a69a;
 }
 
+.profile-image{
+  border-radius: 5%;
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  image-orientation: from-image;
+}
+
+
 .parallax-container {
   min-height: 380px;
   line-height: 0;
