@@ -1,14 +1,21 @@
 .navbar-link {
-    color: #444;
+  color: #444;
 }
 
 .img-logo {
-    max-height: 64px;
-    max-width: 64px;
+  max-height: 64px;
+}
+
+.header-section-background {
+  background-color:rgba(0, 0, 0, 0.548);
 }
 
 p {
   line-height: 2rem;
+}
+
+span.link-text-visible {
+  font-weight: bold;
 }
 
 .button-collapse {
@@ -41,7 +48,6 @@ p {
   }
   .img-logo {
     max-height: 56px;
-    max-width: 56px;
   }
 }
 
