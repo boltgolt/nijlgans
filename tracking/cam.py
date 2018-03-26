@@ -13,11 +13,14 @@ width = 640
 height = 480
 
 # Start video camera on webcam
-video_capture = cv2.VideoCapture(2)
+video_capture = cv2.VideoCapture(0)
 # The ball data container
 ball = {"x": 200.0, "y": 150.0, "d": {"x": 0.0, "y": 0.0}}
 # The default colors in the debug window
 displayColors = [[(0, 0, 255), (50, 50, 200)], [(0, 255, 0), (50, 200, 50)]]
+
+import setpoints
+setpoints.init(video_capture)
 
 def resetBall():
 	"""Reset the position and randomize the direction"""
@@ -48,6 +51,13 @@ try:
 	while True:
 		# Capture a frame
 		ret, frame = (video_capture.read())
+
+		pts1 = numpy.float32([[200,65],[368,52],[28,387],[389,390]])
+		pts2 = numpy.float32([[0, 0], [width, 0], [0, height], [width, height]])
+
+		M = cv2.getPerspectiveTransform(pts1, pts2)
+
+		frame = cv2.warpPerspective(frame, M, (width, height))
 
 		# Convert the frame to HSV
 		col = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)

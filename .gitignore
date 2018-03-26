@@ -1,5 +1,6 @@
-website/.idea
+.idea
 website/.idea/grotekerkplein.iml
 website/.idea/modules.xml
 website/.idea/workspace.xml
 node_modules
+__pycache__
