@@ -46,6 +46,15 @@ io.on("connection", function(socket) {
 		console.log("Socket from ", clientType, " type accepted")
 	})
 
+	socket.on("positionUpdate", (data) => {
+		console.log(data);
+		socket.broadcast.emit("positionUpdate", data)
+	})
+
+	socket.on("switchStatus", (data) => {
+		io.sockets.emit("switchStatus", data)
+	})
+
 	socket.on("disconnect", () => {
 		console.log("Socket from ", clientType, " type lost")
 	})

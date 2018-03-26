@@ -19,34 +19,6 @@ ball = {"x": 200.0, "y": 150.0, "d": {"x": 0.0, "y": 0.0}}
 # The default colors in the debug window
 displayColors = [[(0, 0, 255), (50, 50, 200)], [(0, 255, 0), (50, 200, 50)]]
 
-import setpoints
-setpoints.init(video_capture)
-
-def resetBall():
-	"""Reset the position and randomize the direction"""
-	global ball
-
-	# Set the position to the middle
-	ball["x"] = 200.0
-	ball["y"] = 150.0
-
-	# Randomize the horizontal speed
-	if random.randint(0, 1):
-		ball["d"]["x"] = random.uniform(-3, -2)
-	else:
-		ball["d"]["x"] = random.uniform(3, 2)
-
-	# Randomize the certical speed
-	if random.randint(0, 1):
-		ball["d"]["y"] = random.uniform(-1, -2)
-	else:
-		ball["d"]["y"] = random.uniform(-1, -2)
-
-# Set the starting position
-resetBall()
-
-print(ball)
-
 try:
 	while True:
 		# Capture a frame
@@ -145,36 +117,10 @@ try:
 			cv2.rectangle(fpong, (195, dash_height), (205, dash_height + 10), (255, 255, 255), cv2.FILLED)
 			dash_height += 20
 
-		# Bounce ball on the top and bottom of the image
-		if ball["y"] < 8:
-			ball["y"] = 8
-			ball["d"]["y"] *= -1
-		if ball["y"] > 292:
-			ball["y"] = 292
-			ball["d"]["y"] *= -1
-
-		# Detect collision on the right bat
-		if ball["x"] > 377 and ball["x"] < 380:
-			if ball["y"] > fcord["right"] - 20 and ball["y"] < fcord["right"] + 20:
-				ball["x"] = 377
-				ball["d"]["x"] *= -1
-
-		# Detect collision on the left bat
-		if ball["x"] > 20 and ball["x"] < 23:
-			if ball["y"] > fcord["left"] - 20 and ball["y"] < fcord["left"] + 20:
-				ball["x"] = 23
-				ball["d"]["x"] *= -1
-
-		# Move the ball in the direction it's going
-		ball["x"] += ball["d"]["x"]
-		ball["y"] += ball["d"]["y"]
-
-		# If it's outside the image, reset the ball
-		if ball["x"] < -50 or ball["x"] > 450:
-			resetBall()
-
-		# Draw the new ball position
-		cv2.rectangle(fpong, (int(ball["x"] + 8), int(ball["y"] + 8)), (int(ball["x"] - 8), int(ball["y"] - 8)), (255, 255, 255), cv2.FILLED)
+		l_file = open("vars/left_y", "w")
+		l_file.write(str(fcord["left"]))
+		r_file = open("vars/right_y", "w")
+		r_file.write(str(fcord["right"]))
 
 		# Show the game screen
 		cv2.imshow("Game", fpong)
