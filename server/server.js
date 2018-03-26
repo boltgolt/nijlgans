@@ -48,7 +48,11 @@ io.on("connection", function(socket) {
 
 	socket.on("positionUpdate", (data) => {
 		console.log(data);
-		socket.broadcast.emit("positionUpdate", data)
+		io.sockets.emit("positionUpdate", data)
+	})
+
+	socket.on("setCountdown", (data) => {
+		io.sockets.emit("setCountdown", data)
 	})
 
 	socket.on("switchStatus", (data) => {

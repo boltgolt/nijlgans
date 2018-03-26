@@ -34,16 +34,16 @@ function animate() {
 
     ctx.fillRect(xP1,yP1,widthP,heightP);
     ctx.stroke();
-    
+
     ctx.fillRect(xP2,yP2,widthP,heightP);
     ctx.stroke();
-    
+
     ctx.fillRect(xBall,yBall,sizeBall,sizeBall);
     ctx.stroke();
-    
+
     ctx.fillText(scoreP1,width/2-52,50);
     ctx.fillText(scoreP2,width/2+30,50);
-    
+
     // Walls
     for (var i = 0; i < height/10; i++) {
     ctx.fillRect(xWall,i*sizeWall*1.5-sizeWall*0.5,sizeWall,sizeWall);

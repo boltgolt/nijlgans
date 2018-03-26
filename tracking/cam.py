@@ -5,7 +5,7 @@ import time
 import random
 
 # The contour of a tracker marker should be at least this long
-min_contour_length = 48
+min_contour_length = 24
 
 # The width of the webcam frame
 width = 640
@@ -29,7 +29,7 @@ try:
 
 		M = cv2.getPerspectiveTransform(pts1, pts2)
 
-		frame = cv2.warpPerspective(frame, M, (width, height))
+		# frame = cv2.warpPerspective(frame, M, (width, height))
 
 		# Convert the frame to HSV
 		col = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
