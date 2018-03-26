@@ -62,6 +62,18 @@ span.link-text-visible {
   }
 }
 
+@media only screen and (max-width : 420px) {
+  .page-header{
+    font-size: 3.5rem;
+  }
+}
+
+@media only screen and (max-width : 350px) {
+  .page-header{
+    font-size: 3rem;
+  }
+}
+
 .icon-block {
   padding: 0 15px;
 }
@@ -72,3 +84,4 @@ span.link-text-visible {
 footer.page-footer {
   margin: 0;
 }
+

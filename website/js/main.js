@@ -18,7 +18,7 @@ $(document).ready(function() {
     });
 });
 
-fetch('/events')
+/*fetch('/events')
   .then(function(response) {
     return response.json();
   })
@@ -26,8 +26,32 @@ fetch('/events')
     console.log(myJson);
         var arrayLength = myJson.length;
         for (var i = 0; i < arrayLength; i++) {
-            var div = document.createElement("div");       
-            div.innerHTML = myJson[i].name + " " + myJson[i].start.month + "-" + myJson[i].start.day + " Dit begint om: " + myJson[i].start.hour + ":00"              
-            document.getElementById("holder").appendChild(div);                   
+            var p = document.createElement("p");
+            p.className = "left-align light"       
+            p.innerHTML = myJson[i].name + " Datum: " + myJson[i].start.day + "-" + myJson[i].start.month + "-2018" + " Tijdstip: " + myJson[i].start.hour + ":00"              
+            document.getElementById("holder").appendChild(p);                   
+    }
+  });*/
+
+  fetch('/events')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+        var arrayLength = myJson.length;
+        for (var i = 0; i < arrayLength; i++) {
+            var p = document.createElement("p");
+            p.className = "left-align light apiName"   
+            p.innerHTML = myJson[i].name           
+            document.getElementById("holder").appendChild(p);  
+            var p = document.createElement("p");
+            p.className = "left-align light apiDate"       
+            p.innerHTML =  myJson[i].start.day + '-' + myJson[i].start.month + '-2018'    
+            document.getElementById("holder").appendChild(p);   
+            var p = document.createElement("p");
+            p.className = "left-align light apiTime"       
+            p.innerHTML =  myJson[i].start.hour + ':00'           
+            document.getElementById("holder").appendChild(p);                   
     }
   });
