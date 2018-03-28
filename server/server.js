@@ -43,6 +43,7 @@ app.get("/events", function(req, res){
 var l_points = 0;
 var r_points = 0;
 
+
 function declareWinner(){
 
 	if(l_points > r_points)
@@ -59,8 +60,10 @@ function declareWinner(){
 	}
 }
 
-function startTimer(duration) {
-	var minutes = 5;
+function startTimer() {
+	console.log(l_points);
+
+	var minutes = 1;
 	var seconds = 0;
 	setInterval(function () {
 		if (seconds == 0) {
@@ -96,7 +99,7 @@ io.on("connection", function(socket) {
 	})
 
 	socket.on("positionUpdate", (data) => {
-		console.log(data);
+		// console.log(data);
 		l_points = data.p.l;
 		r_pointa = data.p.r;
 		io.sockets.emit("positionUpdate", data)
@@ -109,6 +112,9 @@ io.on("connection", function(socket) {
 	socket.on("switchStatus", (data) => {
 		io.sockets.emit("switchStatus", data)
 
+		if (data == "game") {
+			startTimer()
+		}
 	})
 
 	socket.on("disconnect", () => {

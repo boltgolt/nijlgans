@@ -13,7 +13,7 @@ width = 640
 height = 480
 
 # Start video camera on webcam
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture(2)
 # The ball data container
 ball = {"x": 200.0, "y": 150.0, "d": {"x": 0.0, "y": 0.0}}
 # The default colors in the debug window
@@ -24,12 +24,16 @@ try:
 		# Capture a frame
 		ret, frame = (video_capture.read())
 
-		pts1 = numpy.float32([[200,65],[368,52],[28,387],[389,390]])
+		cv2.imshow("Raw cam", frame)
+
+		frame = cv2.flip( frame, -1 )
+
+		pts1 = numpy.float32([[60, 60], [500, 100], [80, 360],[440,330]])
 		pts2 = numpy.float32([[0, 0], [width, 0], [0, height], [width, height]])
 
-		M = cv2.getPerspectiveTransform(pts1, pts2)
 
-		# frame = cv2.warpPerspective(frame, M, (width, height))
+		M = cv2.getPerspectiveTransform(pts1, pts2)
+		frame = cv2.warpPerspective(frame, M, (width, height))
 
 		# Convert the frame to HSV
 		col = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -61,6 +65,9 @@ try:
 				# Get the contour moments
 				M = cv2.moments(contour)
 
+				if M["m00"] == 0:
+					continue
+
 				# Calculate the XY cords of the centre
 				cX = int(M["m10"] / M["m00"])
 				cY = int(M["m01"] / M["m00"])
@@ -91,12 +98,12 @@ try:
 			cv2.circle(frame, (cont_wins[1][1]["x"], cont_wins[1][1]["y"]), 4, (255, 255, 255), -1)
 
 		# Show the image in a window
-		cv2.imshow("Veld cam", frame)
+		cv2.imshow("Track cam", frame)
 
 		# Create an empty black image
 		fpong = numpy.zeros((300, 400, 3), numpy.uint8)
 		# Set the cords to off screen by default
-		fcord = {"left": -60, "right": -60}
+		fcord = {"left": 150, "right": 150}
 
 		# Set the relative opsition of the points if they exist
 		if len(cont_wins[0]) > 0:
