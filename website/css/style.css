@@ -104,3 +104,7 @@ footer.page-footer {
   font-size: 1.2rem;
   margin-bottom: 100px;
 }
+
+.added-margin {
+  margin-bottom: 40px;
+}
