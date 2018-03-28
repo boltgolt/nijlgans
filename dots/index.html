@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 		<script src="script.js"></script>
 
 		<style media="screen">
@@ -9,9 +11,41 @@
 				margin: 0;
 				background: #000;
 			}
+
+			section {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				top: 0;
+				height: 100vh;
+				width: 133.33333333333333vh;
+				padding: 10vh;
+				box-sizing: border-box;
+			}
+
+			div {
+				background: #fff;
+				position: fixed;
+				width: 10vh;
+				height: 10vh;
+				border-radius: 100vh;
+				box-shadow: 0px 0px 3vh 3vh #fff;
+			}
+
+			div:first-child, div:last-child {
+				height: 40vh;
+			}
+
+			div:last-child {
+				right: 0;
+			}
 		</style>
 	</head>
 	<body>
-
+		<section>
+			<div id="left"></div>
+			<div id="ball"></div>
+			<div id="right"></div>
+		</section>
 	</body>
 </html>

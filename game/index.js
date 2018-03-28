@@ -59,6 +59,14 @@ socket.on("connect", function() {
 	socket.emit("hello", "game")
 })
 
+
+// Start the game if screens are in game mode
+socket.on("switchStatus", function(data) {
+	if (data == "game") {
+		doDownCount()
+	}
+})
+
 function tick() {
 	var autoloop = true
 	refreshTracking()
@@ -122,5 +130,3 @@ function tick() {
 		tick()
 	}, 17)
 }
-
-tick()
