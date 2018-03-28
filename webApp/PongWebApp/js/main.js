@@ -51,6 +51,9 @@ function updateScreen() {
         case "game":
             document.getElementById("game").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
+            document.getElementById("playButton").addEventListener("click", function(){
+                console.log("test");
+                socket.emit("switchStatus","mainMenu")
             break;
 
         case "nameInput": //canceled

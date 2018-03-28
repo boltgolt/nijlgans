@@ -60,12 +60,14 @@ function declareWinner(){
 	}
 }
 
+var interval
+
 function startTimer() {
 	console.log(l_points);
 
 	var minutes = 1;
 	var seconds = 0;
-	setInterval(function () {
+	interval = setInterval(function () {
 		if (seconds == 0) {
 			seconds = 59
 			minutes--
@@ -85,6 +87,7 @@ function startTimer() {
 
 		if (minutes < 0) {
 			declareWinner();
+			clearInterval(interval);
 		}
 		io.sockets.emit("gameString", gameString)
 	}, 1000);
@@ -114,6 +117,8 @@ io.on("connection", function(socket) {
 
 		if (data == "game") {
 			startTimer()
+		} else {
+			clearInterval(interval);
 		}
 	})
 
