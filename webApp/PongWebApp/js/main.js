@@ -8,7 +8,7 @@ var headerHeight = height/3;
 var footerHeight = height*2/3
 
 var appStatus = "mainMenu";
-var gameMode = 0;
+//var gameMode = 0; Only 1 gamemode for now
 
 c.width = width;
 c.height = height;
@@ -39,14 +39,10 @@ function updateScreen() {
 
         case "chooseMode":
             document.getElementById("chooseMode").style.display = "flex";
-            document.getElementById("gamemodeButtons").style.display = "flex";
-            document.getElementById("classic").addEventListener("click", function(){
-                gameMode = 0;
-                console.log("test");
-                socket.emit("switchStatus","game")
-            }, false)
-            document.getElementById("coop").addEventListener("click", function(){
-                gameMode = 1;
+            document.getElementById("playButton").style.display = "flex";
+            document.getElementById("footerContent").innerHTML = "classic";
+            document.getElementById("playButton").addEventListener("click", function(){
+                //gameMode = 0;
                 console.log("test");
                 socket.emit("switchStatus","game")
             }, false)
@@ -57,12 +53,12 @@ function updateScreen() {
             document.getElementById("playButton").style.display = "flex";
             break;
 
-        case "nameInput":
+        case "nameInput": //canceled
             document.getElementById("nameInput").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
             break;
 
-        case "scoreMenu":
+        case "scoreMenu": //canceled
             document.getElementById("scoreMenu").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
             document.getElementById("playButton").addEventListener("click", function(){

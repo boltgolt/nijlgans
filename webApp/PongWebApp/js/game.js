@@ -15,7 +15,7 @@ var sizeWall = widthP;
 var xWall = width/2-sizeWall/2
 
 var gameTimer = 0;
-var gameScore = 0;
+//var gameScore = 0;
 var scoreP1 = 0;
 var scoreP2 = 0;
 
