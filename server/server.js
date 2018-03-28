@@ -88,6 +88,7 @@ function startTimer() {
 		if (minutes < 0) {
 			declareWinner();
 			clearInterval(interval);
+			io.sockets.emit("switchStatus", "mainMenu")
 		}
 		io.sockets.emit("gameString", gameString)
 	}, 1000);

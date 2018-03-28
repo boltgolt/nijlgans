@@ -49,7 +49,7 @@ let countdown = 0
 let ball = {x: 0, y: 0, d: {x: 0, y: 0}}
 let points = {l: 0, r: 0}
 let winner = 0;
-
+let autoloop = true
 
 
 refreshTracking()
@@ -69,11 +69,15 @@ socket.on("connect", function() {
 socket.on("switchStatus", function(data) {
 	if (data == "game") {
 		doDownCount()
+		autoloop = true
+	}
+	else {
+		autoloop = false
 	}
 })
 
 function tick() {
-	var autoloop = true
+	
 	refreshTracking()
 
 	ball.x += ball.d.x
