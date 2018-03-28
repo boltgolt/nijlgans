@@ -7,8 +7,9 @@
 }
 
 .background-image-filter {
-  -webkit-filter: blur(3px); /* Safari 6.0 - 9.0 */
-  filter: blur(3px);
+  filter: brightness(0.6);
+  -webkit-filter: brightness(0.6);
+  width: 101%;
 }
 
 p {
@@ -74,6 +75,12 @@ span.link-text-visible {
   }
 }
 
+@media only screen and (max-width : 700px) {
+  .background-image-filter {
+    width: auto;
+  }
+}
+
 .icon-block {
   padding: 0 15px;
 }
@@ -83,5 +90,18 @@ span.link-text-visible {
 
 footer.page-footer {
   margin: 0;
+}
+
+.apiName {
+ font-size: 1.8rem;
+}
+
+.apiDate {
+  font-size: 1.2rem;
+}
+
+.apiTime {
+  font-size: 1.2rem;
+  margin-bottom: 100px;
 }
 

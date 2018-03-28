@@ -26,6 +26,7 @@ var ctx = c.getContext("2d");
 
 ctx.fillStyle="#FFFFFF"
 ctx.strokeStyle="#000000"
+ctx.textAlign = "center";
 
 // Animation frame
 function animate() {
@@ -41,8 +42,8 @@ function animate() {
     ctx.fillRect(xBall,yBall,sizeBall,sizeBall);
     ctx.stroke();
 
-    ctx.fillText(scoreP1,width/2-52,50);
-    ctx.fillText(scoreP2,width/2+30,50);
+    ctx.fillText(scoreP1,width/2-50,50);
+    ctx.fillText(scoreP2,width/2+50,50);
 
     // Walls
     for (var i = 0; i < height/10; i++) {
@@ -53,8 +54,8 @@ function animate() {
     // Countdown
     if (countdown > 0) {
         ctx.font = "100px FFFForward"
-        ctx.fillText(countdown,width/2-30,height/2+50);
-        ctx.strokeText(countdown,width/2-30,height/2+50);
+        ctx.fillText(countdown,width/2,height/2+50);
+        ctx.strokeText(countdown,width/2,height/2+50);
     }
     window.requestAnimationFrame(animate);
   }
