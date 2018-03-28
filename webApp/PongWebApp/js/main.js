@@ -79,3 +79,44 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 updateScreen();
+
+fetch('/events')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+        myJson.length = 5;
+        var arrayLength = myJson.length;
+        for (var i = 0; i < arrayLength; i++) {
+            var p = document.createElement("p");
+            var apiName = myJson[i].name;
+            var smallerName = apiName.substr(0, 15);
+            p.className = "apiData"       
+            p.innerHTML = smallerName + "..."+ " //datum: " + myJson[i].start.day + "-" + myJson[i].start.month + "-2018" + " //tijd: " + myJson[i].start.hour + ":00"              
+            document.getElementById("holder").appendChild(p);                   
+    }
+  });
+
+/*fetch('/events')
+.then(function(response) {
+  return response.json();
+})
+.then(function(myJson) {
+  console.log(myJson);
+      var arrayLength = myJson.length;
+      for (var i = 0; i < arrayLength; i++) {
+          var p = document.createElement("p");
+          p.className = "center-align light apiName"   
+          p.innerHTML = myJson[i].name           
+          document.getElementById("agenda").appendChild(p);  
+          var p = document.createElement("p");
+          p.className = "center-align light apiDate"       
+          p.innerHTML =  myJson[i].start.day + '-' + myJson[i].start.month + '-2018'    
+          document.getElementById("agenda").appendChild(p);   
+          var p = document.createElement("p");
+          p.className = "center-align light apiTime"       
+          p.innerHTML =  myJson[i].start.hour + ':00'           
+          document.getElementById("agenda").appendChild(p);                   
+  }
+});*/

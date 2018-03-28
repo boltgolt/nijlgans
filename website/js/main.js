@@ -42,15 +42,15 @@ fetch('/events')
         var arrayLength = myJson.length;
         for (var i = 0; i < arrayLength; i++) {
             var p = document.createElement("p");
-            p.className = "center-align light apiName"   
+            p.className = "apiName"   
             p.innerHTML = myJson[i].name           
             document.getElementById("holder").appendChild(p);  
             var p = document.createElement("p");
-            p.className = "center-align light apiDate"       
+            p.className = "apiDate"       
             p.innerHTML =  myJson[i].start.day + '-' + myJson[i].start.month + '-2018'    
             document.getElementById("holder").appendChild(p);   
             var p = document.createElement("p");
-            p.className = "center-align light apiTime"       
+            p.className = "apiTime"       
             p.innerHTML =  myJson[i].start.hour + ':00'           
             document.getElementById("holder").appendChild(p);                   
     }
