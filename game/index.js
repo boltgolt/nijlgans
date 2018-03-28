@@ -23,9 +23,6 @@ function respawnBall() {
 }
 
 function doDownCount() {
-
-	//finished = false;
-
 	setTimeout(function () {
 		respawnBall()
 		socket.emit("setCountdown", 3)
@@ -41,9 +38,7 @@ function doDownCount() {
 	}, 3500)
 	setTimeout(function () {
 		tick()
-		//finished = true;
 	}, 4000)
-
 }
 
 let batHeight = 56
@@ -119,8 +114,6 @@ function tick() {
 			}
 	}
 
-
-
 	socket.emit("positionUpdate", {
 		l: left,
 		r: right,
@@ -140,3 +133,5 @@ function tick() {
 		tick()
 	}, 17)
 }
+
+tick()

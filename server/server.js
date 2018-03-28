@@ -99,7 +99,7 @@ io.on("connection", function(socket) {
 	})
 
 	socket.on("positionUpdate", (data) => {
-		// console.log(data);
+		console.log(data);
 		l_points = data.p.l;
 		r_pointa = data.p.r;
 		io.sockets.emit("positionUpdate", data)
