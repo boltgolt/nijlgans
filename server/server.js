@@ -39,6 +39,54 @@ app.get("/events", function(req, res){
 	})
 })
 
+
+var l_points = 0;
+var r_points = 0;
+
+function declareWinner(){
+
+	if(l_points > r_points)
+	{
+		gameString = "P1 WINS!";
+	}
+	else if(l_points == r_points)
+	{
+		gameString = "DRAW!";
+	}
+	else
+	{
+		gameString = "P2 WINS!";
+	}
+}
+
+function startTimer(duration) {
+	var minutes = 5;
+	var seconds = 0;
+	setInterval(function () {
+		if (seconds == 0) {
+			seconds = 59
+			minutes--
+		}
+		else {
+			seconds--
+		}
+
+		if (minutes == 0 && seconds < 1) {
+			return declareWinner();
+		}
+
+		format_minutes = minutes < 10 ? "0" + minutes : minutes;
+		format_seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		gameString = format_minutes + ":" + format_seconds;
+
+		if (minutes < 0) {
+			declareWinner();
+		}
+		io.sockets.emit("gameString", gameString)
+	}, 1000);
+}
+
 io.on("connection", function(socket) {
 	let clientType = false
 
@@ -49,6 +97,8 @@ io.on("connection", function(socket) {
 
 	socket.on("positionUpdate", (data) => {
 		console.log(data);
+		l_points = data.p.l;
+		r_pointa = data.p.r;
 		io.sockets.emit("positionUpdate", data)
 	})
 
@@ -58,11 +108,13 @@ io.on("connection", function(socket) {
 
 	socket.on("switchStatus", (data) => {
 		io.sockets.emit("switchStatus", data)
+
 	})
 
 	socket.on("disconnect", () => {
 		console.log("Socket from ", clientType, " type lost")
 	})
+
 })
 
 server.listen(4200)

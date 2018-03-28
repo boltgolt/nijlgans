@@ -24,4 +24,5 @@ socket.on("setCountdown", function(data) {
 
 socket.on("gameString", function(string) {
     document.getElementById("footerContent").innerHTML = string;
+
 })

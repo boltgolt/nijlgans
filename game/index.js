@@ -1,6 +1,7 @@
 const socket = require("socket.io-client")("http://localhost:4200")
 const fs = require("fs")
 
+
 function refreshTracking() {
 	left = fs.readFileSync("../tracking/vars/left_y", "utf8")
 	right = fs.readFileSync("../tracking/vars/right_y", "utf8")
@@ -22,6 +23,9 @@ function respawnBall() {
 }
 
 function doDownCount() {
+
+	//finished = false;
+
 	setTimeout(function () {
 		respawnBall()
 		socket.emit("setCountdown", 3)
@@ -37,7 +41,9 @@ function doDownCount() {
 	}, 3500)
 	setTimeout(function () {
 		tick()
+		//finished = true;
 	}, 4000)
+
 }
 
 let batHeight = 56
@@ -47,6 +53,9 @@ let right
 let countdown = 0
 let ball = {x: 0, y: 0, d: {x: 0, y: 0}}
 let points = {l: 0, r: 0}
+let winner = 0;
+
+
 
 refreshTracking()
 respawnBall()
@@ -58,6 +67,7 @@ socket.on("connect", function() {
 
 	socket.emit("hello", "game")
 })
+
 
 
 // Start the game if screens are in game mode
