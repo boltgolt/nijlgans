@@ -19,41 +19,45 @@ function updateScreen() {
     for (i = 0; i < canvasCount.length; i++) {
         canvasCount[i].style.height = height + "px";
         canvasCount[i].style.display = "none";
-    } 
+    }
     var footerCount = document.getElementsByClassName("wrapperFooter");
     for (i = 0; i < footerCount.length; i++) {
         footerCount[i].style.height = footerHeight + "px";
         footerCount[i].style.display = "none";
-    } 
+    }
 
     // App menus
     switch (appStatus) {
         case "mainMenu":
             document.getElementById("mainMenu").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
-            document.getElementById("playButton").addEventListener("click", function(){
-                console.log("test");
+            document.getElementById("footerContent").innerHTML = "play";
+            document.getElementById("playButton").onclick = function(){
+                scoreP1 = 0;
+                scoreP2 = 0
+                console.log("menu");
                 socket.emit("switchStatus","chooseMode")
-            }, false)
+            }
             break;
 
         case "chooseMode":
             document.getElementById("chooseMode").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
             document.getElementById("footerContent").innerHTML = "classic";
-            document.getElementById("playButton").addEventListener("click", function(){
+            document.getElementById("playButton").onclick = function(){
                 //gameMode = 0;
-                console.log("test");
+                console.log("choose");
                 socket.emit("switchStatus","game")
-            }, false)
+            }
             break;
 
         case "game":
             document.getElementById("game").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
-            document.getElementById("playButton").addEventListener("click", function(){
-                console.log("test");
+            document.getElementById("playButton").onclick = function(){
+                console.log("game");
                 socket.emit("switchStatus","mainMenu")
+            }
             break;
 
         case "nameInput": //canceled
@@ -64,13 +68,10 @@ function updateScreen() {
         case "scoreMenu": //canceled
             document.getElementById("scoreMenu").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
-            document.getElementById("playButton").addEventListener("click", function(){
+            document.getElementById("playButton").onclick = function(){
                 console.log("test");
                 socket.emit("switchStatus","mainMenu")
-            }, false)
-            break;
-
-        default:
+            }
             break;
     }
 }
@@ -95,9 +96,9 @@ fetch('/events')
             var p = document.createElement("p");
             var apiName = myJson[i].name;
             var smallerName = apiName.substr(0, 15);
-            p.className = "apiData"       
-            p.innerHTML = smallerName + "..."+ " //datum: " + myJson[i].start.day + "-" + myJson[i].start.month + "-2018" + " //tijd: " + myJson[i].start.hour + ":00"              
-            document.getElementById("holder").appendChild(p);                   
+            p.className = "apiData"
+            p.innerHTML = smallerName + "..."+ " //datum: " + myJson[i].start.day + "-" + myJson[i].start.month + "-2018" + " //tijd: " + myJson[i].start.hour + ":00"
+            document.getElementById("holder").appendChild(p);
     }
   });
 
@@ -110,16 +111,16 @@ fetch('/events')
       var arrayLength = myJson.length;
       for (var i = 0; i < arrayLength; i++) {
           var p = document.createElement("p");
-          p.className = "center-align light apiName"   
-          p.innerHTML = myJson[i].name           
-          document.getElementById("agenda").appendChild(p);  
+          p.className = "center-align light apiName"
+          p.innerHTML = myJson[i].name
+          document.getElementById("agenda").appendChild(p);
           var p = document.createElement("p");
-          p.className = "center-align light apiDate"       
-          p.innerHTML =  myJson[i].start.day + '-' + myJson[i].start.month + '-2018'    
-          document.getElementById("agenda").appendChild(p);   
+          p.className = "center-align light apiDate"
+          p.innerHTML =  myJson[i].start.day + '-' + myJson[i].start.month + '-2018'
+          document.getElementById("agenda").appendChild(p);
           var p = document.createElement("p");
-          p.className = "center-align light apiTime"       
-          p.innerHTML =  myJson[i].start.hour + ':00'           
-          document.getElementById("agenda").appendChild(p);                   
+          p.className = "center-align light apiTime"
+          p.innerHTML =  myJson[i].start.hour + ':00'
+          document.getElementById("agenda").appendChild(p);
   }
 });*/

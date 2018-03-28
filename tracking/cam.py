@@ -13,7 +13,7 @@ width = 640
 height = 480
 
 # Start video camera on webcam
-video_capture = cv2.VideoCapture(2)
+video_capture = cv2.VideoCapture(0)
 # The ball data container
 ball = {"x": 200.0, "y": 150.0, "d": {"x": 0.0, "y": 0.0}}
 # The default colors in the debug window

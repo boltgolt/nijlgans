@@ -3,8 +3,8 @@ const fs = require("fs")
 
 
 function refreshTracking() {
-	left = fs.readFileSync("../tracking/vars/left_y", "utf8")
-	right = fs.readFileSync("../tracking/vars/right_y", "utf8")
+	left = parseInt(fs.readFileSync("../tracking/vars/left_y", "utf8"))
+	right = parseInt(fs.readFileSync("../tracking/vars/right_y", "utf8"))
 }
 
 function respawnBall() {
@@ -37,11 +37,18 @@ function doDownCount() {
 		socket.emit("setCountdown", 0)
 	}, 3500)
 	setTimeout(function () {
-		tick()
+		console.log(forceShutdown);
+		if (forceShutdown) {
+			forceShutdown = false
+		}
+		else {
+			autoloop = true
+			tick()
+		}
 	}, 4000)
 }
 
-let batHeight = 56
+let batHeight = 70
 let ballHeight = 17
 let left
 let right
@@ -50,6 +57,7 @@ let ball = {x: 0, y: 0, d: {x: 0, y: 0}}
 let points = {l: 0, r: 0}
 let winner = 0;
 let autoloop = true
+let forceShutdown = false
 
 
 refreshTracking()
@@ -63,21 +71,27 @@ socket.on("connect", function() {
 	socket.emit("hello", "game")
 })
 
-
+socket.on("forceShutdown", function() {
+	forceShutdown = true
+})
 
 // Start the game if screens are in game mode
 socket.on("switchStatus", function(data) {
+	console.log(data);
 	if (data == "game") {
 		doDownCount()
+		forceShutdown = false
 		autoloop = true
 	}
 	else {
 		autoloop = false
+		points.l = 0
+		points.r = 0
 	}
 })
 
 function tick() {
-	
+
 	refreshTracking()
 
 	ball.x += ball.d.x
@@ -93,12 +107,12 @@ function tick() {
 	}
 
 	if (ball.x < -50) {
-		points.l++
+		points.r++
 		autoloop = false
 		doDownCount()
 	}
 	if (ball.x > 450) {
-		points.r++
+		points.l++
 		autoloop = false
 		doDownCount()
 	}
@@ -137,5 +151,3 @@ function tick() {
 		tick()
 	}, 17)
 }
-
-tick()

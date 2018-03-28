@@ -45,27 +45,23 @@ var r_points = 0;
 
 
 function declareWinner(){
-
-	if(l_points > r_points)
-	{
+	if (l_points > r_points) {
 		gameString = "P1 WINS!";
 	}
-	else if(l_points == r_points)
-	{
-		gameString = "DRAW!";
-	}
-	else
-	{
+	else if (l_points < r_points) {
 		gameString = "P2 WINS!";
 	}
+	else {
+		gameString = "DRAW!";
+	}
+
+	io.sockets.emit("gameString", gameString)
 }
 
 var interval
 
 function startTimer() {
-	console.log(l_points);
-
-	var minutes = 1;
+	var minutes = 2;
 	var seconds = 0;
 	interval = setInterval(function () {
 		if (seconds == 0) {
@@ -77,7 +73,15 @@ function startTimer() {
 		}
 
 		if (minutes == 0 && seconds < 1) {
-			return declareWinner();
+			clearInterval(interval);
+			declareWinner();
+			io.sockets.emit("forceShutdown")
+
+			setTimeout(function () {
+				io.sockets.emit("switchStatus", "mainMenu")
+			}, 3000)
+
+			return
 		}
 
 		format_minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -85,11 +89,6 @@ function startTimer() {
 
 		gameString = format_minutes + ":" + format_seconds;
 
-		if (minutes < 0) {
-			declareWinner();
-			clearInterval(interval);
-			io.sockets.emit("switchStatus", "mainMenu")
-		}
 		io.sockets.emit("gameString", gameString)
 	}, 1000);
 }
@@ -103,7 +102,7 @@ io.on("connection", function(socket) {
 	})
 
 	socket.on("positionUpdate", (data) => {
-		console.log(data);
+		// console.log(data);
 		l_points = data.p.l;
 		r_pointa = data.p.r;
 		io.sockets.emit("positionUpdate", data)
@@ -114,11 +113,13 @@ io.on("connection", function(socket) {
 	})
 
 	socket.on("switchStatus", (data) => {
+		console.log(data);
 		io.sockets.emit("switchStatus", data)
 
 		if (data == "game") {
 			startTimer()
 		} else {
+			io.sockets.emit("forceShutdown")
 			clearInterval(interval);
 		}
 	})
