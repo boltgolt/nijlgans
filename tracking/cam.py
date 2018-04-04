@@ -13,11 +13,14 @@ width = 640
 height = 480
 
 # Start video camera on webcam
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture(2)
 # The ball data container
 ball = {"x": 200.0, "y": 150.0, "d": {"x": 0.0, "y": 0.0}}
 # The default colors in the debug window
 displayColors = [[(0, 0, 255), (50, 50, 200)], [(0, 255, 0), (50, 200, 50)]]
+
+# video_capture.set(3, 640)
+# video_capture.set(4, 480)
 
 try:
 	while True:
@@ -28,7 +31,7 @@ try:
 
 		frame = cv2.flip( frame, -1 )
 
-		pts1 = numpy.float32([[60, 60], [500, 100], [80, 360],[440,330]])
+		pts1 = numpy.float32([[80, 60], [630, 100], [110, 430], [570, 460]])
 		pts2 = numpy.float32([[0, 0], [width, 0], [0, height], [width, height]])
 
 

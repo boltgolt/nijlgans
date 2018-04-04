@@ -7,6 +7,25 @@ function refreshTracking() {
 	right = parseInt(fs.readFileSync("../tracking/vars/right_y", "utf8"))
 }
 
+function startIdleLoop() {
+	idlePassLoop = setInterval(function () {
+		refreshTracking()
+
+		socket.emit("positionUpdate", {
+			l: left,
+			r: right,
+			b: {
+				x: ball.x,
+				y: ball.y
+			},
+			p: {
+				l: points.l,
+				r: points.r
+			}
+		})
+	}, 17)
+}
+
 function respawnBall() {
 	ball.x = 200
 	ball.y = 150
@@ -23,6 +42,8 @@ function respawnBall() {
 }
 
 function doDownCount() {
+	startIdleLoop()
+
 	setTimeout(function () {
 		respawnBall()
 		socket.emit("setCountdown", 3)
@@ -37,11 +58,11 @@ function doDownCount() {
 		socket.emit("setCountdown", 0)
 	}, 3500)
 	setTimeout(function () {
-		console.log(forceShutdown);
 		if (forceShutdown) {
 			forceShutdown = false
 		}
 		else {
+			clearInterval(idlePassLoop)
 			autoloop = true
 			tick()
 		}
@@ -58,7 +79,7 @@ let points = {l: 0, r: 0}
 let winner = 0;
 let autoloop = true
 let forceShutdown = false
-
+let idlePassLoop
 
 refreshTracking()
 respawnBall()
@@ -91,7 +112,7 @@ socket.on("switchStatus", function(data) {
 })
 
 function tick() {
-
+	clearInterval(idlePassLoop)
 	refreshTracking()
 
 	ball.x += ball.d.x
@@ -151,3 +172,5 @@ function tick() {
 		tick()
 	}, 17)
 }
+
+startIdleLoop()

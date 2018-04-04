@@ -7,6 +7,7 @@ let batHeight = window.innerHeight * 0.2
 let ballSize = window.innerHeight * 0.05
 
 socket.on("positionUpdate", function(data) {
+	console.log(data);
 	if (data.l == -60) data.l = -200
 	if (data.r == -60) data.r = -200
 

@@ -1,3 +1,4 @@
+const fs = require("fs")
 const express = require("express")
 const app = express()
 const http = require("http")
@@ -35,6 +36,18 @@ app.get("/events", function(req, res){
 			}
 
 			res.send(output)
+
+			try {
+				let string = ""
+
+				for (event of output) {
+					if (event.id == 2488) continue
+
+					string += event.name.split("/")[0].trim() + " - " + event.start.day + "/" + event.start.month + "/2018          "
+				}
+
+				fs.writeFileSync("../tracking/vars/marq", string, {encoding: 'utf8', flag: 'w'})
+			} catch (e) {}
 		})
 	})
 })
@@ -130,6 +143,6 @@ io.on("connection", function(socket) {
 
 })
 
-server.listen(4200)
+server.listen(80)
 
 console.log("Server running on http://localhost:4200")
