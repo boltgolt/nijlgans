@@ -11,45 +11,48 @@ app.use("/dots", express.static(__dirname + "/../dots"))
 
 app.get("/events", function(req, res){
 	console.log("Refreshing raw API data")
-	http.get("http://stadspodium-rotterdam.nl/wp-json/tribe/events/v1/events?start_date=2017-03-13%2000:59:00", sRes => {
-		sRes.setEncoding("utf8")
-		let body = ""
+	res.send([{"id":2488,"name":"Danssalons &#8211; elke zondag","start":{"year":"2017","month":"05","day":"28","hour":"14","minutes":"00","seconds":"00"}},{"id":2497,"name":"Foto-expositie ‘Leven in de Schaduw’ van Sacha de Boer","start":{"year":"2017","month":"06","day":"25","hour":"13","minutes":"00","seconds":"00"}},{"id":2504,"name":"Stadsmeditatie // Elke vrijdag bezinnen in het nieuwe Stadspark","start":{"year":"2017","month":"07","day":"07","hour":"12","minutes":"00","seconds":"00"}},{"id":2502,"name":"Kids Kick It!","start":{"year":"2017","month":"08","day":"02","hour":"13","minutes":"00","seconds":"00"}},{"id":2520,"name":"Verhalenfontein voor kinderen","start":{"year":"2017","month":"08","day":"05","hour":"00","minutes":"00","seconds":"00"}},{"id":2523,"name":"Fit in het nieuwe Stadspark / elke zaterdag","start":{"year":"2017","month":"08","day":"05","hour":"10","minutes":"00","seconds":"00"}},{"id":2517,"name":"Rotterdamse Roze Picknick","start":{"year":"2017","month":"08","day":"20","hour":"12","minutes":"30","seconds":"00"}},{"id":2514,"name":"Brunchconcert","start":{"year":"2017","month":"09","day":"24","hour":"12","minutes":"30","seconds":"00"}}])
 
-		sRes.on("data", data => {
-			body += data
-		})
 
-		sRes.on("end", () => {
-			let json = JSON.parse(body)
-			let output = []
-
-			console.log("Parsing API data")
-
-			for (let event of json["events"]) {
-				if (event.id == 2481) continue
-
-				output.push({
-					"id": event.id,
-					"name": event.title,
-					"start": event.start_date_details
-				})
-			}
-
-			res.send(output)
-
-			try {
-				let string = ""
-
-				for (event of output) {
-					if (event.id == 2488) continue
-
-					string += event.name.split("/")[0].trim() + " - " + event.start.day + "/" + event.start.month + "/2018          "
-				}
-
-				fs.writeFileSync("../tracking/vars/marq", string, {encoding: 'utf8', flag: 'w'})
-			} catch (e) {}
-		})
-	})
+	// http.get("http://stadspodium-rotterdam.nl/wp-json/tribe/events/v1/events?start_date=2017-03-13%2000:59:00", sRes => {
+	// 	sRes.setEncoding("utf8")
+	// 	let body = ""
+    //
+	// 	sRes.on("data", data => {
+	// 		body += data
+	// 	})
+    //
+	// 	sRes.on("end", () => {
+	// 		let json = JSON.parse(body)
+	// 		let output = []
+    //
+	// 		console.log("Parsing API data")
+    //
+	// 		for (let event of json["events"]) {
+	// 			if (event.id == 2481) continue
+    //
+	// 			output.push({
+	// 				"id": event.id,
+	// 				"name": event.title,
+	// 				"start": event.start_date_details
+	// 			})
+	// 		}
+    //
+	// 		res.send(output)
+    //
+	// 		try {
+	// 			let string = ""
+    //
+	// 			for (event of output) {
+	// 				if (event.id == 2488) continue
+    //
+	// 				string += event.name.split("/")[0].trim() + " - " + event.start.day + "/" + event.start.month + "/2018          "
+	// 			}
+    //
+	// 			fs.writeFileSync("../tracking/vars/marq", string, {encoding: 'utf8', flag: 'w'})
+	// 		} catch (e) {}
+	// 	})
+	// })
 })
 
 
