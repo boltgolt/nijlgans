@@ -77,8 +77,8 @@ function declareWinner(){
 var interval
 
 function startTimer() {
-	var minutes = 2;
-	var seconds = 0;
+	var minutes = 1;
+	var seconds = 30;
 	interval = setInterval(function () {
 		if (seconds == 0) {
 			seconds = 59
