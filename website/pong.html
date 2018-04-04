@@ -58,6 +58,12 @@
           <div class="container">
             <div class="section">
 
+              <div class="row">
+                <div class="col s12 center">
+                  <div id="twitch-embed"></div>
+                </div>
+              </div>
+
           <div class="row">
             <div class="col s12 center">
               <h5 class="center light">Het concept</h2>
@@ -80,9 +86,8 @@
                 <h5 class="white-text">Handige websites</h5>
                 <ul>
                   <li><a class="white-text" href="https://www.facebook.com/stadspodiumrotterdam/">Stadspodium Facebook</a></li>
-                  <li><a class="white-text" href="#!">Link 2</a></li>
-                  <li><a class="white-text" href="#!">Link 3</a></li>
-                  <li><a class="white-text" href="#!">Link 4</a></li>
+                  <li><a class="white-text" href="http://www.stadspodium-rotterdam.nl/">Stadspodium Website</a></li>
+                  <li><a class="white-text" href="https://www.twitch.tv/boltgolt">Pong on Twitch</a></li>
                 </ul>
               </div>
             </div>
@@ -97,6 +102,7 @@
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
 <script>
 (function($){
   $(function(){
@@ -106,6 +112,13 @@
   
   }); // end of document ready
   })(jQuery); // end of jQuery name space
+</script>
+<script type="text/javascript">
+  new Twitch.Embed("twitch-embed", {
+    width: 1280,
+    height: 720,
+    channel: "boltgolt"
+  });
 </script>
 </body>
 </html>
