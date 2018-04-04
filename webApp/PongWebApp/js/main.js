@@ -5,7 +5,7 @@ var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 
 var height = width*0.75;
 
 var headerHeight = height/3;
-var footerHeight = height*2/3
+var footerHeight = height*2/3 - 80
 
 var appStatus = "mainMenu";
 //var gameMode = 0; Only 1 gamemode for now
@@ -44,7 +44,7 @@ function updateScreen() {
                 } else if (i.msRequestFullscreen) {
                     i.msRequestFullscreen();
                 }
-                
+
                 scoreP1 = 0;
                 scoreP2 = 0
                 console.log("menu");
