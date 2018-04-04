@@ -33,6 +33,18 @@ function updateScreen() {
             document.getElementById("playButton").style.display = "flex";
             document.getElementById("footerContent").innerHTML = "play";
             document.getElementById("playButton").onclick = function(){
+                var i = document.body
+
+                if (i.requestFullscreen) {
+                    i.requestFullscreen();
+                } else if (i.webkitRequestFullscreen) {
+                    i.webkitRequestFullscreen();
+                } else if (i.mozRequestFullScreen) {
+                    i.mozRequestFullScreen();
+                } else if (i.msRequestFullscreen) {
+                    i.msRequestFullscreen();
+                }
+                
                 scoreP1 = 0;
                 scoreP2 = 0
                 console.log("menu");
@@ -41,7 +53,6 @@ function updateScreen() {
             break;
 
         case "chooseMode":
-            document.body.requestFullscreen()
             document.getElementById("chooseMode").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
             document.getElementById("footerContent").innerHTML = "classic";
