@@ -41,6 +41,7 @@ function updateScreen() {
             break;
 
         case "chooseMode":
+            document.body.requestFullscreen()
             document.getElementById("chooseMode").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
             document.getElementById("footerContent").innerHTML = "classic";
