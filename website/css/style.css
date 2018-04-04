@@ -108,3 +108,12 @@ footer.page-footer {
 .added-margin {
   margin-bottom: 40px;
 }
+
+.twitch {
+  height: 720px;
+  width: 1080px;
+}
+
+.twitch-embed {
+  height: 720px;
+}
