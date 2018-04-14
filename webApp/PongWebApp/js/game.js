@@ -1,4 +1,4 @@
-// Game variables
+// Position variables for draw elements
 var xP1 = 0;
 var yP1 = 50;
 
@@ -8,28 +8,31 @@ var yP2 = 120;
 var xBall = 150;
 var yBall = 100;
 
+// Sizes for draw elements
 var widthP = width/36;
 var heightP = widthP*5;
 var sizeBall = widthP*1.5;
 var sizeWall = widthP;
 var xWall = width/2-sizeWall/2
 
+// Game variables to display
 var gameTimer = 0;
-//var gameScore = 0;
 var scoreP1 = 0;
 var scoreP2 = 0;
 
 var countdown = 0;
 
-// Draw game elements
+// Drawing logic
 var ctx = c.getContext("2d");
 
+// Initialization for draw style
 ctx.fillStyle="#FFFFFF"
 ctx.strokeStyle="#000000"
 ctx.textAlign = "center";
 
 // Animation frame
 function animate() {
+    // The actual drawing
     ctx.clearRect(0,0,width,height);
     ctx.font = "30px FFFForward"
 
@@ -59,5 +62,5 @@ function animate() {
     }
     window.requestAnimationFrame(animate);
   }
-
+// Call to draw which gets repeated
 window.requestAnimationFrame(animate);

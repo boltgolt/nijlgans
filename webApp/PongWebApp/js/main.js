@@ -1,19 +1,21 @@
-// Set canvas size to 4:3 adn resize the main elements
+// Set canvas size to 4:3 and resize the main elements based on viewport width
 var c = document.getElementById("gameCanvas");
 
 var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 var height = width*0.75;
 
-var headerHeight = height/3;
-var footerHeight = height*2/3 - 80
-
-var appStatus = "mainMenu";
-//var gameMode = 0; Only 1 gamemode for now
-
 c.width = width;
 c.height = height;
 
+var headerHeight = height/3;
+var footerHeight = height*2/3 - 80 // -80 for bottom offset, adjust until footer is visible
+
+// appStatus will define what screen is showing
+var appStatus = "mainMenu";
+
+// This function handles the different screens that can show
 function updateScreen() {
+    // Give all the elements the right size and set display to none
     document.getElementById("wrapperHeader").style.height = headerHeight + "px";
     var canvasCount = document.getElementsByClassName("wrapperCanvas");
     for (i = 0; i < canvasCount.length; i++) {
@@ -28,6 +30,7 @@ function updateScreen() {
 
     // App menus
     switch (appStatus) {
+        // Show the right elements for the screen in each case
         case "mainMenu":
             document.getElementById("mainMenu").style.display = "flex";
             document.getElementById("playButton").style.display = "flex";
@@ -57,7 +60,6 @@ function updateScreen() {
             document.getElementById("playButton").style.display = "flex";
             document.getElementById("footerContent").innerHTML = "classic";
             document.getElementById("playButton").onclick = function(){
-                //gameMode = 0;
                 console.log("choose");
                 socket.emit("switchStatus","game")
             }
@@ -71,23 +73,10 @@ function updateScreen() {
                 socket.emit("switchStatus","mainMenu")
             }
             break;
-
-        case "nameInput": //canceled
-            document.getElementById("nameInput").style.display = "flex";
-            document.getElementById("playButton").style.display = "flex";
-            break;
-
-        case "scoreMenu": //canceled
-            document.getElementById("scoreMenu").style.display = "flex";
-            document.getElementById("playButton").style.display = "flex";
-            document.getElementById("playButton").onclick = function(){
-                console.log("test");
-                socket.emit("switchStatus","mainMenu")
-            }
-            break;
     }
 }
 
+// Updates the screen when loaded
 document.addEventListener("DOMContentLoaded", function(event) {
     socket.on("switchStatus", function(status) {
         appStatus = status;
